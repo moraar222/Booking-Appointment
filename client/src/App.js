@@ -8,6 +8,8 @@ import Salon from "./pages/salon/Salon";
 import List from "./pages/list/List";
 import Login from "./pages/login/Login";
 import Register from "./pages/Register/Register";
+import  WhatWeOffer from './pages/WhatWeOffer/WhatWeOffer';
+
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/register" element={<Register />}/>
         <Route path="/salons" element={<List/>}/>
         <Route path="/salons/:id" element={<Salon/>}/>
+        <Route path="/WhatWeOffer" element={<WhatWeOffer/>}/>
+        
       </Routes>
     </BrowserRouter>
   );

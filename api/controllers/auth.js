@@ -22,8 +22,7 @@ export const register = async (req, res, next) => {
       const hash = bcrypt.hashSync(password, salt);
 
       const newUser = new User({
-          username: username,
-          email: email,
+          ...req.body,
           password: hash,
       });
 
@@ -70,7 +69,7 @@ export const Register = async (req,res,next) => {
         const {password, isAdmin, ...otherDetails} = user._doc
         res.cookie("access_token", token, {
             httpOnly:true,
-        }).status(200).json({...otherDetails, token })
+        }).status(200).json({details:{...otherDetails}, token, isAdmin })
     }catch(err){
         next(err)
     }

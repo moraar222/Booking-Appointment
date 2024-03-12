@@ -1,4 +1,4 @@
-.homeContainer{
+.homeContainer {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
@@ -6,7 +6,12 @@
   gap: 30px;
 }
 
-.homeTitle{
+.homeTitle {
   width: 1024px;
   font-size: 20px;
+  cursor: text; /* Set cursor to text when hovering over the title */
+}
+
+.homeTitle:hover {
+  cursor: pointer; /* Change cursor to pointer on hover */
 }

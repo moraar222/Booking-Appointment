@@ -7,6 +7,7 @@ import salonsRoute from "./routes/salons.js"
 import stationsRoute from "./routes/stations.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import sendEmail from "./routes/utils/sendEmail.js"
 
 const app = express()
 dotenv.config()
@@ -36,6 +37,36 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/salons", salonsRoute);
 app.use("/api/stations", stationsRoute);
+
+app.post("/api/send-feedback", (req, res) => {
+    const { feedback } = req.body;
+
+    if (!feedback) return res.status(400).json({ message: "Feedback cannot be empty" })
+
+    sendEmail({
+        to: "moraar976@gmail.com",
+        subject: "Feedback from the frontend",
+        text: feedback,
+    })
+
+    return res.status(200).json({ message: "Email sent successfully!" })
+})
+
+app.post("/api/make-reservation", (req, res) => {
+    const { salonId, selectedDate, time } = req.body;
+
+    if (!salonId) return res.status(400).json({ message: "You have to provide a salonId" });
+    // get a particular salon
+
+    // check if date & time are available 
+
+    // add reservation/booking at that date and time
+
+    return res.status(200).json({ message: "Reservation added successfully!" });
+})
+
+
+
 
 app.use((err, req, res, next)=>{
     const errorStatus = err.status || 500

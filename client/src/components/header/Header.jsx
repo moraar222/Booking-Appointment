@@ -1,6 +1,4 @@
-import {
-  faCalendarDays,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { DateRange } from "react-date-range";
@@ -12,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 
 const Header = ({ type }) => {
-  const [destination, setDestination] = useState("");
+  const [service, setService] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
@@ -42,8 +40,8 @@ const Header = ({ type }) => {
   const { dispatch } = useContext(SearchContext) || {};
 
   const handleSearch = () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-    navigate("/salons", { state: { destination, dates, options } });
+    dispatch({ type: "NEW_SEARCH", payload: { service, dates, options } });
+    navigate("/salons", { state: { service, dates, options } });
   };
 
   const navigateToServicePage = (service) => {
@@ -77,7 +75,7 @@ const Header = ({ type }) => {
         }
       >
         <div className="headerList">
-          <div
+          {/* <div
             className="headerListItem active"
             onClick={() => navigateToServicePage("Hair and Beauty Services")}
           >
@@ -106,7 +104,7 @@ const Header = ({ type }) => {
             onClick={() => navigateToServicePage("Manicure And Pedicure")}
           >
             <span>Manicure And Pedicure</span>
-          </div>
+          </div> */}
         </div>
         {type !== "list" && (
           <>
@@ -122,10 +120,11 @@ const Header = ({ type }) => {
                   type="text"
                   placeholder="Seeking service?"
                   className="headerSearchInput"
-                  onChange={(e) => setDestination(e.target.value)}
+                  onChange={(e) => setService(e.target.value)}
                 />
               </div>
-              <div className="headerSearchItem">
+
+              {/*<div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
                 <span
                   onClick={() => setOpenDate(!openDate)}
@@ -134,6 +133,7 @@ const Header = ({ type }) => {
                   dates[0].endDate,
                   "MM/dd/yyyy"
                 )}`}</span>
+
                 {openDate && (
                   <DateRange
                     editableDateInputs={true}
@@ -144,7 +144,7 @@ const Header = ({ type }) => {
                     minDate={new Date()}
                   />
                 )}
-              </div>
+                </div>*/}
 
               <div className="headerSearchItem">
                 <button className="headerBtn" onClick={handleSearch}>

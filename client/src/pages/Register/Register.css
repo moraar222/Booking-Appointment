@@ -1,32 +1,35 @@
 .register {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .lContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .lInput{
-    height: 30px;
-    padding: 10px;
-  }
-  
-  .lButton {
-    border: none;
-    padding: 10px 20px;
-    background-color: #0071c2;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .lButton:disabled{
-    background-color: #0071c28c;
-    cursor: not-allowed;
-  }
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #003580 50%, #ffffff 50%); /* Gradient from blue to white */
+  background-image: url('https://i.pinimg.com/564x/e6/a6/d7/e6a6d7b263753a39798574341953baf0.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+  background-size: cover; /* Cover the entire container with the background image */
+}
+
+.lContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lInput {
+  height: 30px;
+  padding: 10px;
+}
+
+.lButton {
+  border: none;
+  padding: 10px 20px;
+  background-color: #0071c2; /* Blue button color */
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.lButton:disabled {
+  background-color: #0071c28c; /* Light blue with opacity for disabled */
+  cursor: not-allowed;
+}

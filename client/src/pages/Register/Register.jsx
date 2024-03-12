@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "./Register.css";
+import axios from "axios";
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
@@ -32,7 +33,7 @@ const Register = () => {
       newErrors.password = "Please enter a password.";
     } else if (credentials.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters long.";
-    } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(credentials.password)) {
+    } else if (!(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(credentials.password))) {
       newErrors.password = "Password must contain at least one lowercase letter, one uppercase letter, and one digit.";
     }
     if (!credentials.email.trim()) {
@@ -58,7 +59,16 @@ const Register = () => {
       navigate("/");
     } catch (err) {
       dispatch({ type: "REGISTER_FAILURE", payload: err.response.data });
-      console.log(err.response.data);
+      const _errors_ = err.response.data;
+      const e = _errors_?.message;
+      
+      const errs = {};
+      if (e?.includes("email")) errs.email = "Email already exists"; 
+
+      if (Object.keys(errs).length > 0) {
+        setErrors(errs);
+        return;
+      }
     }
   };
 
@@ -100,3 +110,5 @@ const Register = () => {
     </div>
   );
 };
+
+export default Register;

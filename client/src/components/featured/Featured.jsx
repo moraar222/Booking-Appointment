@@ -23,7 +23,7 @@ const Featured = () => {
         />
         <div className="featuredTitles">
           <h1>Kiwanja</h1>
-          <h2>{data[0]} salons</h2>
+          <h2>{data[0]} 1 salon</h2>
         </div>
       </div>
       
@@ -35,7 +35,7 @@ const Featured = () => {
         />
         <div className="featuredTitles">
           <h1>Transformer</h1>
-          <h2>{data[1]} salons</h2>
+          <h2>{data[1]}2 salons</h2>
         </div>
       </div>
       <div className="featuredItem">
@@ -46,7 +46,7 @@ const Featured = () => {
         />
         <div className="featuredTitles">
           <h1>Kenyatta Market</h1>
-          <h2>{data[2]} salons</h2>
+          <h2>{data[2]} 3 salons</h2>
         </div>
       </div>
       </>

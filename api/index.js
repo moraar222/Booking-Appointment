@@ -13,7 +13,6 @@ const app = express()
 dotenv.config()
 
 const connect = async ()=>{
-
     try {
         await mongoose.connect(process.env.MONGO);
         console.log("connected to mongodb")
@@ -56,13 +55,18 @@ app.post("/api/make-reservation", (req, res) => {
     const { salonId, selectedDate, time } = req.body;
 
     if (!salonId) return res.status(400).json({ message: "You have to provide a salonId" });
-    // get a particular salon
+    try {
 
-    // check if date & time are available 
-
-    // add reservation/booking at that date and time
-
-    return res.status(200).json({ message: "Reservation added successfully!" });
+        // get a particular salon
+        
+        // check if date & time are available 
+        
+        // add reservation/booking at that date and time
+        
+        return res.status(200).json({ message: "Reservation added successfully!" });
+    } catch (err) {
+        return res.status(500).json("A server error occurred!")   
+    }
 })
 
 

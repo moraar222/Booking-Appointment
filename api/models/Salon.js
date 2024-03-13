@@ -1,56 +1,55 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import { StationSchema } from './Station.js';
 
-const SalonSchema= new mongoose.Schema({
-    name:{
+
+const SalonSchema = new mongoose.Schema({
+    name: {
         type: String,
-        required:true
+        required: true
     },
     type: {
         type: String,
-        required:true
+        required: true
     },
-    city:{
-        type:String,
-        required:true
-    },
-    address:{
+    city: {
         type: String,
-        required:true
+        required: true
     },
-    distance:{
+    address: {
         type: String,
-        required:true
+        required: true
     },
-    photos:{
-        type: [String],
-      
-    },
-    title:{
+    distance: {
         type: String,
-        required:true
+        required: true
     },
-    desc:{
-        type: String,
-        required:true
-    },
-    
-    rating:{
-        type: Number,
-        min:0,
-        max:5
-    },
-    Rooms:{
+    photos: {
         type: [String],
     },
-    cheapestPrice:{
-        type: Number,
-        required:true
+    title: {
+        type: String,
+        required: true
     },
-    featured:{
+    desc: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5
+    },
+    stations: {
+        type: [StationSchema],
+    },
+    cheapestPrice: {
+        type: Number,
+        required: true
+    },
+    featured: {
         type: Boolean,
         default: false,
     },
-
 });
-export default mongoose.model("Salon", SalonSchema)
+
+export default mongoose.model("Salon", SalonSchema);

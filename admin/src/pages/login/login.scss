@@ -1,0 +1,50 @@
+.login {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, #01487a 50%, #ffffff 50%); /* Gradient from blue to white */
+    background-image: url('https://i.pinimg.com/564x/e6/a6/d7/e6a6d7b263753a39798574341953baf0.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+    background-size: cover; 
+  }
+  
+  .lContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #f38a27; /* Semi-transparent white background */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  .lInput {
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #0071c2; /* Blue border */
+    border-radius: 5px;
+  }
+  
+  .lInput:focus {
+    outline: none;
+    border-color: #005baa; /* Darker blue border color on focus */
+  }
+  
+  .lButton {
+    border: none;
+    padding: 12px 24px;
+    background-color: #005baa; /* Darker blue button color */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .lButton:hover {
+    background-color: #f38a27; /* Dark blue color on hover */
+  }
+  
+  .lButton:disabled {
+    background-color: #0071c28c; /* Light blue with opacity for disabled */
+    cursor: not-allowed;
+  }

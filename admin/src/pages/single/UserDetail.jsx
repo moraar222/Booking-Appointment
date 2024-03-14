@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-const Single = () => {
+const UserDetail = () => {
   const location = useLocation();
   const path = location.pathname.split("/")[1];
   const params = useParams();
-  const [data, setData] = useState();
+  const [user, setUser] = useState();
 
   const fetchUser = (userId) => {
-    axios.get("/users/" + userId).then(({ data }) => setData(data)).catch(console.log);
+    axios.get("/users/" + userId).then(({ data }) => setUser(data)).catch(console.log);
   }
 
   useEffect(() => {
@@ -36,29 +36,23 @@ const Single = () => {
             <h1 className="title">Information</h1>
             <div className="item">
               <img
-                src="https://i.pinimg.com/236x/6b/8c/1f/6b8c1fe0f3db51fa075dfd80761516c2.jpg"
+                src={user?.img}
                 alt=""
                 className="itemImg"
               />
               <div className="details">
-                <h1 className="itemTitle">{data?.username}</h1>
+                <h1 className="itemTitle">{user?.username}</h1>
                 <div className="detailItem">
                   <span className="itemKey">Email:</span>
-                  <span className="itemValue">{data?.email}</span>
+                  <span className="itemValue">{user?.email}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+254714254255</span>
+                  <span className="itemValue">{user?.phone}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Address:</span>
-                  <span className="itemValue">
-                    kiwanja
-                  </span>
-                </div>
-                <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">Kenya</span>
+                  <span className="itemValue">{user?.city}</span>
                 </div>
               </div>
             </div>
@@ -77,4 +71,4 @@ const Single = () => {
 };
 
 
-export default Single;
+export default UserDetail;

@@ -22,14 +22,14 @@
 .lButton {
   border: none;
   padding: 10px 20px;
-  background-color: #0071c2; /* Blue button color */
-  color: white;
+  background-color: rgb(128, 0, 32); /* Blue button color */
+  color: #f5f5dc;
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
 }
 
 .lButton:disabled {
-  background-color: #0071c28c; /* Light blue with opacity for disabled */
+  background-color: rgb(128, 0, 32); /* Light blue with opacity for disabled */
   cursor: not-allowed;
 }

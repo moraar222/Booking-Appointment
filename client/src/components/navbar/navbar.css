@@ -1,6 +1,6 @@
 .navbar{
   height: 50px;
-  background-color: #003580;
+  background-color: rgb(128, 0, 32);
   display: flex;
   justify-content: center;
 }
@@ -8,7 +8,7 @@
 .navContainer{
   width: 100%;
   max-width: 1024px;
-  color: white;
+  color: #f5f5dc;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,5 +23,5 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  color: #003580;
+  color: rgb(128, 0, 32);
 }

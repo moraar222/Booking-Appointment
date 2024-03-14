@@ -1,4 +1,4 @@
-import "./newHotel.scss";
+import "./newSalon.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
@@ -7,10 +7,10 @@ import { hotelInputs } from "../../formSource";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 
-const NewHotel = () => {
+const NewSalon = () => {
   const [files, setFiles] = useState("");
   const [info, setInfo] = useState({});
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setStations] = useState([]);
 
   const { data, loading, error } = useFetch("/stations");
 
@@ -23,7 +23,7 @@ const NewHotel = () => {
       e.target.selectedOptions,
       (option) => option.value
     );
-    setRooms(value);
+    setStations(value);
   };
   
   console.log(files)
@@ -46,13 +46,13 @@ const NewHotel = () => {
         })
       );
 
-      const newhotel = {
+      const newsalon = {
         ...info,
         rooms,
         photos: list,
       };
 
-      await axios.post("/salons", newhotel);
+      await axios.post("/salons", newsalon);
     } catch (err) {console.log(err)}
   };
   return (
@@ -108,7 +108,7 @@ const NewHotel = () => {
                 </select>
               </div>
               <div className="selectRooms">
-                <label>Rooms</label>
+                <label>Stations</label>
                 <select id="rooms" multiple onChange={handleSelect}>
                   {loading
                     ? "loading"
@@ -129,4 +129,4 @@ const NewHotel = () => {
   );
 };
 
-export default NewHotel;
+export default NewSalon;

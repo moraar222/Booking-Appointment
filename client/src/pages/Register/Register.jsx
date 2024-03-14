@@ -9,6 +9,7 @@ const Register = () => {
     username: "",
     password: "",
     email: "",
+    phone: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -16,7 +17,9 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+    const { id, value } = e.target;
+    if (id === "phone" && value.length > 10) return; // Maximum length check
+    setCredentials((prev) => ({ ...prev, [id]: value }));
     // Clear previous error messages when the user starts typing
     setErrors({});
   };
@@ -33,17 +36,18 @@ const Register = () => {
       newErrors.password = "Please enter a password.";
     } else if (credentials.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters long.";
-    } else if (!(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(credentials.password))) {
+    } else if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(credentials.password)) {
       newErrors.password = "Password must contain at least one lowercase letter, one uppercase letter, and one digit.";
     }
     if (!credentials.email.trim()) {
       newErrors.email = "Please enter an email.";
-    } else if (
-      !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
-        credentials.email.trim()
-      )
-    ) {
+    } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(credentials.email.trim())) {
       newErrors.email = "Please enter a valid email address.";
+    }
+    if (!credentials.phone.trim()) {
+      newErrors.phone = "Please enter a phone number.";
+    } else if (credentials.phone.length !== 10) {
+      newErrors.phone = "Phone number must be 10 digits long.";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -102,6 +106,15 @@ const Register = () => {
           className="lInput"
         />
         {errors.email && <span>{errors.email}</span>}
+        <input
+          type="text"
+          placeholder="phone"
+          id="phone"
+          value={credentials.phone}
+          onChange={handleChange}
+          className="lInput"
+        />
+        {errors.phone && <span>{errors.phone}</span>}
         <button disabled={loading} onClick={handleClick} className="lButton">
           Register
         </button>

@@ -38,7 +38,7 @@ export const deleteReservation = async (req, res, next) => {
 
 export const getReservation = async (req, res, next) => {
   try {
-    const reservation = await Reservation.findById(req.params.id);
+    const Reservation = await Reservation.findById(req.params.id);
     res.status(200).json(Reservation);
   } catch (err) {
     next(err);
@@ -46,7 +46,7 @@ export const getReservation = async (req, res, next) => {
 };
 
 export const getReservations = async (req, res, next) => {
-  const { username, email, day, startTime, ...others } = req.query;
+  const { Servicename, Duration, Salonistid, startTime, ...others } = req.query;
   try {
     let query = { ...others };
     if (name) {
@@ -67,12 +67,12 @@ export const getReservations = async (req, res, next) => {
   }
 };
 
-export const countByDay = async (req, res, next) => {
-  const day = req.query.days.split(",");
+export const countByDuration = async (req, res, next) => {
+  const Duration = req.query.days.split(",");
   try {
     const list = await Promise.all(
-      days.map((day) => {
-        return Reservation.countDocuments({ day: day });
+      Duration.map((Duration) => {
+        return Reservation.countByDuration({ Duration: Duration });
       })
     );
     res.status(200).json(list);

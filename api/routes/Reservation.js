@@ -1,6 +1,6 @@
 import express from "express";
 import { 
-     countByDay, createReservation,
+     countByDuration, createReservation,
      deleteReservation, 
      getReservation,
      getReservations,
@@ -24,7 +24,7 @@ router.get("/find/:id", getReservation)
 
 //GET ALL
 router.get("/", getReservations)
-router.get("/countByDay", countByDay)
+router.get("/countByDuration", countByDuartion)
 // router.get("/countByType", countByType)
 
 

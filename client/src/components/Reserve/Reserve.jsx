@@ -34,6 +34,12 @@ const Reserve = ({ setOpen, salonId }) => {
     setSelectedTime(time);
   };
 
+  const queryDate = () => {
+    // This function is called when the date is clicked
+    // You can perform any actions related to querying the date here
+    console.log("Date clicked:", selectedDate);
+  };
+
   const handleClick = async () => {
     try {
       if (!selectedDate || !selectedTime) {
@@ -72,6 +78,7 @@ const Reserve = ({ setOpen, salonId }) => {
           <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
+            onClick={queryDate} // Attach the onClick event to the date picker
             dateFormat="MM/dd/yyyy"
             minDate={new Date()}
             inline

@@ -2,21 +2,42 @@ import mongoose from 'mongoose';
 
 
 const ReservationSchema= new mongoose.Schema({   
-    username:{
+    date:{
         type: String,
         required:true,
         unique:true
     },
-    email:{
+    Startime:{
         type: String,
         required:true,
-        unique:true
     },
-    day: {
+    Endtime: {
         type: String,
         required:true
     },
-    time:{
+    Service:{
         type: String,
         required: true,
-    },})
+    },
+    Salonistid: {
+        type: String,
+        required:true
+    },
+    Servicename:{
+        type: String,
+        required: true,
+    },
+    Duration:{
+        type: String,
+        required: true,
+    },
+    Price:{
+        type: String,
+        required: true,
+    },
+    Tecnichians:{
+        type: String,
+        required: true,
+    },
+
+})

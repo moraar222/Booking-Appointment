@@ -28,26 +28,26 @@ const AuthReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_START":
       return {
-        user: null,
-
-        
+        ...state,
         loading: true,
         error: null,
       };
     case "LOGIN_SUCCESS":
       return {
-        user: action.payload,
+        ...state,
+        user: action.payload, // Update user data with name
         loading: false,
         error: null,
       };
     case "LOGIN_FAILURE":
       return {
-        user: null,
+        ...state,
         loading: false,
         error: action.payload,
       };
     case "LOGOUT":
       return {
+        ...state,
         user: null,
         loading: false,
         error: null,

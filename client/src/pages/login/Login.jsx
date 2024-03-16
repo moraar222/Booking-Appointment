@@ -11,8 +11,9 @@ const Login = () => {
   });
 
   const { loading, error, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext); // Assuming user data is stored in AuthContext
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -23,14 +24,12 @@ const Login = () => {
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post("/auth/login", credentials);
-      console.log(res.data)
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      navigate("/")
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data }); // Assuming res.data contains user details including name
+      navigate("/");
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
     }
   };
-
 
   return (
     <div className="login">
@@ -57,4 +56,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

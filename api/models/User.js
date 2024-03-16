@@ -22,18 +22,18 @@ const UserSchema= new mongoose.Schema({
     },
     country:{
         type: String,
-        required: true,
+        required: false,
     },
     img:{
         type: String,
     },
     city:{
         type: String,
-        required: true,
+        required: false,
     },
     phone:{
         type: String,
-        required: true,
+        required: false,
     },
 }, {timestamps:true})
 

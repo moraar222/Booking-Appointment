@@ -1,42 +1,46 @@
-import Station from "./models/Station";
+import Reservation from "./models/Reservation";
 
+export const makeReservation = async (req, res) => {
+    try {
+        const { selectedDate, selectedTime } = req.body;
 
-function isBlockedTime(date, time, lunchHours) {
-    const dayOfWeek = date.getDay(); // 0 - Sunday, 6 - Saturday
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        // Check if a reservation already exists for the selected date and time
+        const existingReservation = await Reservation.findOne({
+            selectedDate,
+            selectedTime,
+        });
 
-    if (lunchHours) {
-        const bookedTime = new Date(date.getTime());
-        bookedTime.setHours(parseInt(time.split(':')[0]));
-        bookedTime.setMinutes(parseInt(time.split(':')[1]));
+        if (existingReservation) {
+            return res.status(400).json({ message: "Time slot already booked." });
+        }
 
-        const lunchStartTime = new Date(date.getTime());
-        lunchStartTime.setHours(parseInt(lunchHours.start.split(':')[0]));
-        lunchStartTime.setMinutes(parseInt(lunchHours.start.split(':')[1]));
+        // Assuming 'startTime' and 'endTime' are extracted from 'selectedTime' in frontend
+        const [startTime, endTime] = selectedTime.split('-');
 
-        const lunchEndTime = new Date(date.getTime());
-        lunchEndTime.setHours(parseInt(lunchHours.end.split(':')[0]));
-        lunchEndTime.setMinutes(parseInt(lunchHours.end.split(':')[1]));
+        // Check if it is lunch hour
+        const lunchHours = { start: '12:00', end: '13:00' }; // Example lunch hours
+        if (isLunchHour(selectedTime, lunchHours)) {
+            return res.status(400).json({ message: "Lunch hour is not available." });
+        }
 
-        return isWeekend || (bookedTime >= lunchStartTime && bookedTime <= lunchEndTime);
-    } else {
-        return isWeekend;
+        // Create a new reservation document in the database
+        const reservation = new Reservation({
+            selectedDate,
+            startTime,
+            endTime,
+        });
+
+        // Save the reservation to the database
+        await reservation.save();
+
+        res.status(201).json({ message: "Reservation created successfully." });
+    } catch (error) {
+        console.error("Error occurred during reservation:", error);
+        res.status(500).json({ message: "Failed to create reservation." });
     }
 }
 
-async function makeReservation(salonId, stationId, date, time) {
-    // ... existing validation and station retrieval logic ...
-
-    const station = await Station.findById(stationId);
-
-    // Check for blocked weekends or lunch hours
-    if (station.blockedWeekends && (date.getDay() === 0 || date.getDay() === 6)) {
-        throw new Error('Station unavailable on weekends');
-    } else if (station.lunchHours) {
-        if (isBlockedTime(date, time, station.lunchHours)) {
-            throw new Error('Station unavailable during lunch hours');
-        }
-    }
-
-    // ... existing reservation creation and saving logic ...
+function isLunchHour(selectedTime, lunchHours) {
+    const [start, end] = lunchHours;
+    const [selectedStart, selectedEnd] = selectedTime.split
 }

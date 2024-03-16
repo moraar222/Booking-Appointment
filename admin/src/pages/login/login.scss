@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background-color: #f38a27; /* Semi-transparent white background */
+    background-color: rgb(128, 0, 32); /* Semi-transparent white background */
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
@@ -21,19 +21,19 @@
   .lInput {
     height: 40px;
     padding: 10px;
-    border: 1px solid #0071c2; /* Blue border */
+    border: 1px solid rgb(128, 0, 32); /* Blue border */
     border-radius: 5px;
   }
   
   .lInput:focus {
     outline: none;
-    border-color: #005baa; /* Darker blue border color on focus */
+    border-color: rgb(128, 0, 32); /* Darker blue border color on focus */
   }
   
   .lButton {
     border: none;
     padding: 12px 24px;
-    background-color: #005baa; /* Darker blue button color */
+    background-color: rgb(128, 0, 32); /* Darker blue button color */
     color: white;
     font-weight: bold;
     cursor: pointer;
@@ -41,10 +41,10 @@
   }
   
   .lButton:hover {
-    background-color: #f38a27; /* Dark blue color on hover */
+    background-color: #008009; /* Dark blue color on hover */
   }
   
   .lButton:disabled {
-    background-color: #0071c28c; /* Light blue with opacity for disabled */
+    background-color: rgb(128, 0, 32); /* Light blue with opacity for disabled */
     cursor: not-allowed;
   }

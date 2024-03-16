@@ -1,76 +1,115 @@
-import User from "../models/User.js"
-import bcrypt from "bcryptjs"
-import { createError } from "../routes/utils/error.js"
-import jwt from "jsonwebtoken"
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+// Function to check if the password meets the criteria
+function isStrongPassword(password) {
+  // Check length
+  if (password.length < 8) {
+    return false;
+  }
+  
+  // Check for at least one uppercase letter
+  if (!/[A-Z]/.test(password)) {
+    return false;
+  }
+  
+  // Check for at least one lowercase letter
+  if (!/[a-z]/.test(password)) {
+    return false;
+  }
+  
+  // Check for at least one digit
+  if (!/\d/.test(password)) {
+    return false;
+  }
+  
+  // Check for at least one special character
+  if (!/[^a-zA-Z0-9]/.test(password)) {
+    return false;
+  }
+  
+  return true;
+}
 
 export const register = async (req, res, next) => {
   try {
-      const { username, email, password } = req.body;
-      
-      const errors = [];
-      if (!username) errors.push("Username is required!")
-      if (!email) errors.push("Email is required!")
-      if (!password) errors.push("Password is required!")
-      if (password && !passwordRegex.test(password)) 
-        errors.push("Invalid password, needs to have at least one uppercase and lowercase letter, 1 digit and 1 special character")
+    const { username, email, password } = req.body;
 
-      if (errors.length > 0) return res.status(400).send(errors)
+    // Check if username already exists
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ message: "Username already exists." });
+    }
 
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(password, salt);
+    // Check if email already exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already exists." });
+    }
 
-      const newUser = new User({
-          ...req.body,
-          password: hash,
-      });
+    // Validate input
+    const errors = [];
+    if (!username) errors.push("Username is required!");
+    if (!email) errors.push("Email is required!");
+    if (!password) errors.push("Password is required!");
+    if (!isStrongPassword(password)) {
+      errors.push("Invalid password. Password must have at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.");
+    }
 
-      await newUser.save();
-      res.status(200).send("User has been created.");
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
+    }
+
+    // Hash password
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+    // Create new user
+    const newUser = new User({
+      username,
+      email,
+      password: hash,
+      phone: req.body.phone, // Optional field
+      city: req.body.city, // Optional field
+      country: req.body.country, // Optional field
+    });
+
+    // Save new user to database
+    await newUser.save();
+
+    res.status(201).json({ message: "User has been created successfully." });
   } catch (err) {
-      next(err);
+    next(err);
   }
 };
 
-export const login = async (req,res,next) => {
-    try{
-        const user = await User.findOne({username:req.body.username})
-        if(!user) return next(createError(404, "User not found"))
+export const login = async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
 
-        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
-        if(!isPasswordCorrect) return next(createError(404, "Wrong Password or username"))
-
-        const token = jwt.sign({id:user._id, isAdmin:user.isAdmin}, process.env.JWT)
-
-
-        const {password, isAdmin, ...otherDetails} = user._doc
-        res.cookie("access_token", token, {
-            httpOnly:true,
-        }).status(200).json({...otherDetails, isAdmin, token })
-    }catch(err){
-        next(err)
+    // Check if user exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
     }
-}
-export const Register = async (req,res,next) => {
-    try{
-        const user = await User.findOne({username:req.body.username})
-        if(!user) return next(createError(404, "Username is Required"))
 
-        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
-        if(!isPasswordCorrect) return next(createError(404, "Invalid password, needs to have at least one uppercase and lowercase letter,"))
-
-        const isEmailCorrect = await bcrypt.compare(req.body.password, user.password)
-        if(!isEmailCorrect) return next(createError(404, "Wrong Email Format"))
-
-        const token = jwt.sign({id:user._id, isAdmin:user.isAdmin}, process.env.JWT)
-
-
-        const {password, isAdmin, ...otherDetails} = user._doc
-        res.cookie("access_token", token, {
-            httpOnly:true,
-        }).status(200).json({details:{...otherDetails}, token, isAdmin })
-    }catch(err){
-        next(err)
+    // Verify password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid username or password." });
     }
-}
+
+    // Check if JWT secret is defined
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ message: "JWT secret is not defined." });
+    }
+
+    // Generate JWT token with expiration time
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+
+    res.status(200).json({ token });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -3,10 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-
-import "./reserve.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Reserve = ({ setOpen, salonId }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -34,10 +32,28 @@ const Reserve = ({ setOpen, salonId }) => {
     setSelectedTime(time);
   };
 
-  const queryDate = () => {
-    // This function is called when the date is clicked
-    // You can perform any actions related to querying the date here
-    console.log("Date clicked:", selectedDate);
+  const getAvailableSlotsForDate = async (selectedDate) => {
+    try {
+      const response = await axios.get(`/api/getAvailableSlots?selectedDate=${selectedDate}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching available slots:", error);
+      return [];
+    }
+  };
+
+  const queryDate = async () => {
+    try {
+      if (!selectedDate) {
+        console.error("Date must be selected.");
+        return;
+      }
+
+      const availableSlots = await getAvailableSlotsForDate(selectedDate);
+      console.log("Available slots for", selectedDate, ":", availableSlots);
+    } catch (error) {
+      console.error("Error querying available slots:", error);
+    }
   };
 
   const handleClick = async () => {
@@ -52,7 +68,7 @@ const Reserve = ({ setOpen, salonId }) => {
         selectedTime,
       };
 
-      const response = await axios.post("/api/makeReservation", data);
+      const response = await axios.post("/api/Reservation", data);
       if (response.status === 201) {
         setShowSuccessMessage(true);
         setTimeout(() => {

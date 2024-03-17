@@ -1,43 +1,32 @@
 import mongoose from 'mongoose';
 
+const ReservationSchema = new mongoose.Schema({
+    date: {
+        type: String,
+        required: true,
+    },
+    startTime: {
+        type: String,
+        required: true,
+    },
+    endTime: {
+        type: String,
+        required: true,
+    },
+    service: {
+        type: String,
+        required: false,
+    },
+    salonId: {
+        type: String,
+        required: false
+    },
+    userId: {
+        type: String,
+        required: false
+    }
+});
 
-const ReservationSchema= new mongoose.Schema({   
-    date:{
-        type: String,
-        required:true,
-        unique:true
-    },
-    Startime:{
-        type: String,
-        required:true,
-    },
-    Endtime: {
-        type: String,
-        required:true
-    },
-    Service:{
-        type: String,
-        required: true,
-    },
-    Salonistid: {
-        type: String,
-        required:true
-    },
-    Servicename:{
-        type: String,
-        required: true,
-    },
-    Duration:{
-        type: String,
-        required: true,
-    },
-    Price:{
-        type: String,
-        required: true,
-    },
-    Tecnichians:{
-        type: String,
-        required: true,
-    },
+const Reservation = mongoose.model('Reservation', ReservationSchema);
 
-})
+export default Reservation;

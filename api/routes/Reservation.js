@@ -1,25 +1,37 @@
 import express from "express";
-import { createReservation, deleteReservation, getReservation, getReservations, updateReservation } from "../controllers/reservation.js";
-import { verifyAdmin } from "./utils/verifyToken.js";
-
+import { 
+     countByDuration, createReservation,
+     deleteReservation, 
+     getReservation,
+     getReservations,
+     updateReservation,
+     getAvailableSlots,
+     makeReservation,
+} from "../controllers/reservation.js";
+import { verifyAdmin } from "./utils/verifyToken.js"
 const router = express.Router();
 
-// CREATE
-router.post("/", createReservation);
+//CREATE
+// router.post("/", verifyAdmin, createReservation)
 
-// UPDATE
-router.put("/:id", verifyAdmin, updateReservation);
+//UPDATE
+router.put("/:id", verifyAdmin, updateReservation)
 
-// DELETE
-router.delete("/:id", verifyAdmin, deleteReservation);
+//DELETE
+router.delete("/:id", verifyAdmin, deleteReservation)
 
-// GET
-router.get("/find/:id", getReservation);
+//Get
+router.get("/find/:id", getReservation)
+// router.get("/api/reservations/getAvailableSlots", getAvailableSlots)
 
-// GET ALL
-router.get("/", getReservations);
 
-// COUNT BY DURATION
-// router.get("/countByDuration", countByDuration);
+//GET ALL
+//GET ALL
+router.get("/", getAvailableSlots)
+router.post("/", makeReservation)
 
-export default router;
+router.get("/countByDuration", countByDuration)
+// router.get("/countByType", countByType)
+
+
+export default router

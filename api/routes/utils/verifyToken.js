@@ -23,7 +23,15 @@ export const verifyUser = (req, res, next) => {
     }
   });
 };
-
+export const verifySalonist = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.salonist.id === req.params.id || req.salonist.isAdmin) {
+      next();
+    } else {
+      next(createError(403, "You are not authorized!"));
+    }
+  });
+};
 export const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {

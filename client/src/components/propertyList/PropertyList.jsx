@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import "./propertyList.css";
 import useFetch from "../../hooks/useFetch";
 
@@ -21,7 +20,7 @@ const PropertyList = () => {
         <>
           {data &&
             images.map((img, i) => (
-              <Link to="/WhatWeOffer" className="pListItem" key={i} style={{ color: "unset", textDecoration: "none" }}>
+              <div className="pListItem" key={i}>
                 <img
                   src={img}
                   alt=""
@@ -31,7 +30,7 @@ const PropertyList = () => {
                   <h1>{data[i]?.type}</h1>
                   <h2>{data[i]?.count} {data[i]?.type}</h2>
                 </div>
-              </Link>
+              </div>
             ))}
         </>
       )}

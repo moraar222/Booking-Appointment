@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ReservationSchema = new mongoose.Schema({
+const reservationSchema = new mongoose.Schema({   
     date: {
         type: String,
         required: true,
@@ -11,22 +11,26 @@ const ReservationSchema = new mongoose.Schema({
     },
     endTime: {
         type: String,
+        required: true
+    },
+    serviceName: {
+        type: String,
         required: true,
     },
-    service: {
+    duration: {
         type: String,
-        required: false,
+        required: true,
     },
-    salonId: {
+    price: {
         type: String,
-        required: false
+        required: true,
     },
-    userId: {
-        type: String,
-        required: false
-    }
+    // salonistId: {
+    //     type: String,
+    //     required: true
+    // },
 });
 
-const Reservation = mongoose.model('Reservation', ReservationSchema);
+const Reservation = mongoose.model('Reservation', reservationSchema);
 
 export default Reservation;

@@ -9,6 +9,8 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import sendEmail from "./routes/utils/sendEmail.js"
 import ReservationRoute from "./routes/Reservation.js"
+import makeReservationRoute from "./routes/Reservation.js"
+import salonistsRoute from "./routes/salonists.js"
 
 const app = express()
 dotenv.config()
@@ -37,7 +39,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/salons", salonsRoute);
 app.use("/api/stations", stationsRoute);
-app.use("/api/reservations",ReservationRoute)
+app.use("/api/reservations",ReservationRoute);
+app.use("/api/salonists",salonistsRoute)
+app.use("/api/makeReservation",makeReservationRoute);
+
 
 app.post("/api/send-feedback", (req, res) => {
     const { feedback } = req.body;

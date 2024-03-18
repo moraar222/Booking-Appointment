@@ -14,8 +14,16 @@ const Single = () => {
   const params = useParams();
   const [data, setData] = useState();
 
-  const fetchUser = (userId) => {
-    axios.get("/users/" + userId).then(({ data }) => setData(data)).catch(console.log);
+  const fetchUser = async (userId) => {
+    try {
+      console.log("mum");
+      const response = await axios.get("/users/" + userId);
+      setData(response.data);
+      console.log(response)
+    } catch (error) {
+      console.log("message");
+      console.log(error);
+    }
   }
 
   useEffect(() => {

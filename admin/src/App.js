@@ -14,8 +14,13 @@ import NewHotel from "./pages/newSalon/NewSalon";
 import NewRoom from "./pages/newStation/NewStation";
 import UserDetail from "./pages/single/UserDetail";
 import SalonDetail from "./pages/single/SalonDetail";
+import UserBookingTable from "./pages/Reservations";
+// import UserTable from "./pages/users/users";
+
+//import SalonistDetail from "./pages/single/SalonistDetail";
 
 function App() {
+  console.log("mum",userColumns)
   const { darkMode } = useContext(DarkModeContext);
 
   const ProtectedRoute = ({ children }) => {
@@ -46,6 +51,7 @@ function App() {
               <Route
                 index
                 element={
+                  //<UserTable/>
                   <ProtectedRoute>
                     <List columns={userColumns} />
                   </ProtectedRoute>
@@ -119,12 +125,22 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              </Route>
+            <Route path="Reservations">
+              <Route
+                Component={
+                  <ProtectedRoute>
+                  <UserBookingTable/>
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Route>
         </Routes>
       </BrowserRouter>
     </div>
   );
-}
+  }
+
 
 export default App;

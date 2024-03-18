@@ -141,7 +141,8 @@ const Salon = () => {
         </div>
       )}
       
-      {openModal && <Reserve setOpen={setOpenModal} salonId={id} serviceName={data.name} serviceDuration={data.Duration} />}
+      {openModal && <Reserve setOpen={setOpenModal} salonId={id} serviceName={data.name} 
+      serviceDuration={data.Duration} servicePrice={data.cheapestPrice} />}
     </div>
   );
 };

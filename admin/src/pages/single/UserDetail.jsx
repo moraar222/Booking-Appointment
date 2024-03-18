@@ -14,8 +14,15 @@ const UserDetail = () => {
   const params = useParams();
   const [user, setUser] = useState();
 
-  const fetchUser = (userId) => {
-    axios.get("/users/" + userId).then(({ data }) => setUser(data)).catch(console.log);
+  const fetchUser = async (userId) => {
+    try {
+      const response = await axios.get("/users/" + userId);
+      setUser(response.data);
+      console.log(response)
+    } catch (error) {
+      console.log("message");
+      console.log(error);
+    }
   }
 
   useEffect(() => {

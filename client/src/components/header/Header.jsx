@@ -110,7 +110,7 @@ const Header = ({ type }) => {
           <>
             <h1 className="headerTitle">Beauty And Elegance is our pride.</h1>
             <p className="headerDesc">
-            <h2>Elevate your beauty journey with Beauty And Elegance, where luxury meets affordability </h2>
+            Elevate your beauty journey with Beauty And Elegance, where luxury meets affordability 
 
             </p>
 

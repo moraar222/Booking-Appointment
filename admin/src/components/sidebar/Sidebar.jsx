@@ -47,6 +47,12 @@ const Sidebar = () => {
               <span>Salons</span>
             </li>
           </Link>
+          <Link to="/Reservations" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Reservations</span>
+            </li>
+          </Link>
           {/* <Link to="/stations" style={{ textDecoration: "none" }}>
             <li>
               <CreditCardIcon className="icon" />

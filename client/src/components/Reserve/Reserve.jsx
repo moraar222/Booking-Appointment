@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import "./reserve.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -37,9 +37,15 @@ const Reserve = ({
     queryDate(date);
   };
 
-  const handleTimeChange = (time) => {    
+  const handleTimeChange = (time) => {
     setSelectedTime(time);
-    setCanFit(canFitInAvailableSlots(availableSlots, formatTime(time), formatTime(addHoursToTime(time, serviceDuration))));
+    setCanFit(
+      canFitInAvailableSlots(
+        availableSlots,
+        formatTime(time),
+        formatTime(addHoursToTime(time, serviceDuration))
+      )
+    );
   };
 
   const queryDate = async (date) => {
@@ -69,7 +75,7 @@ const Reserve = ({
   }
 
   function addHoursToTime(initialTime, hoursToAdd) {
-    const date = new Date(initialTime);    
+    const date = new Date(initialTime);
     date.setHours(date.getHours() + hoursToAdd);
     return date;
   }
@@ -77,11 +83,9 @@ const Reserve = ({
   function canFitInAvailableSlots(availableSlots, startTime, endTime) {
     const start = parseInt(startTime);
     const end = parseInt(endTime);
-
     for (const slot of availableSlots) {
       const slotStart = parseInt(slot[0]);
       const slotEnd = parseInt(slot[1]);
-
       if (start >= slotStart && end <= slotEnd) {
         return true;
       }
@@ -104,7 +108,6 @@ const Reserve = ({
         duration: serviceDuration,
         price: servicePrice,
       };
-      console.log("data::", data);
 
       const response = await axios.post("/makeReservation", data);
 
@@ -157,18 +160,16 @@ const Reserve = ({
         <button disabled={!canFit} className="rButton" onClick={handleClick}>
           Reserve Now!
         </button>
-        {showSuccessMessage && (
-          <Modal
-            isOpen={showSuccessMessage}
-            onRequestClose={() => setShowSuccessMessage(false)}
-            contentLabel="Success Message"
-            className="successModal"
-            overlayClassName="successOverlay"
-          >
-            <h2>Yeeeeiy! You have successfully booked an appointment.</h2>
-            <button onClick={() => setShowSuccessMessage(false)}>Close</button>
-          </Modal>
-        )}
+        <Modal
+          isOpen={showSuccessMessage}
+          onRequestClose={() => setShowSuccessMessage(false)}
+          className="successModal"
+          overlayClassName="successOverlay"
+        >
+          <div className="successMessage">
+            Yeeeeiy! You have successfully booked an appointment.
+          </div>
+        </Modal>
       </div>
       <div className="available-slots">
         <p>Available Slots for {selectedDate && formatDate(selectedDate)}</p>

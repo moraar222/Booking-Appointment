@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-
+import Modal from 'react-modal';
 import "./reserve.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,7 +23,6 @@ const Reserve = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Calculate the current time and set it as the minimum selectable time for today
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
@@ -31,7 +30,6 @@ const Reserve = ({
     if (hours < 8 || (hours === 8 && minutes < 0)) {
       currentTime.setHours(8, 0, 0);
     }
-    // setSelectedTime(currentTime);
   }, [availableSlots, selectedTime, selectedDate]);
 
   const handleDateChange = (date) => {
@@ -41,13 +39,9 @@ const Reserve = ({
 
   const handleTimeChange = (time) => {    
     setSelectedTime(time);
-    setCanFit(canFitInAvailableSlots(availableSlots,formatTime(time),formatTime(addHoursToTime(time, serviceDuration))));
-    
+    setCanFit(canFitInAvailableSlots(availableSlots, formatTime(time), formatTime(addHoursToTime(time, serviceDuration))));
   };
 
-  /**
-   * Fetch all available slots for a specific date
-   */
   const queryDate = async (date) => {
     try {
       const response = await axios.get("/reservations", {
@@ -62,7 +56,7 @@ const Reserve = ({
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = date.getMonth() + 1; // Months are 0-indexed, so we add 1
+    const month = date.getMonth() + 1;
     const day = date.getDate();
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
@@ -81,23 +75,18 @@ const Reserve = ({
   }
 
   function canFitInAvailableSlots(availableSlots, startTime, endTime) {
-    // Convert start and end times to numbers for comparison
     const start = parseInt(startTime);
     const end = parseInt(endTime);
 
-    // Iterate over each available slot
     for (const slot of availableSlots) {
       const slotStart = parseInt(slot[0]);
       const slotEnd = parseInt(slot[1]);
 
-      // Check if the provided start and end times fit within the current slot
       if (start >= slotStart && end <= slotEnd) {
-
-        return true; // The times fit in this slot
+        return true;
       }
     }
-
-    return false; // No slot found to fit the times
+    return false;
   }
 
   const handleClick = async () => {
@@ -169,9 +158,16 @@ const Reserve = ({
           Reserve Now!
         </button>
         {showSuccessMessage && (
-          <div className="successMessage">
-            Yeeeeiy! You have successfully booked an appointment.
-          </div>
+          <Modal
+            isOpen={showSuccessMessage}
+            onRequestClose={() => setShowSuccessMessage(false)}
+            contentLabel="Success Message"
+            className="successModal"
+            overlayClassName="successOverlay"
+          >
+            <h2>Yeeeeiy! You have successfully booked an appointment.</h2>
+            <button onClick={() => setShowSuccessMessage(false)}>Close</button>
+          </Modal>
         )}
       </div>
       <div className="available-slots">

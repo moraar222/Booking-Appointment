@@ -1,0 +1,28 @@
+/* ReserveSuccess.css */
+
+.reserve-success {
+    text-align: center;
+    color: maroon;
+  }
+  
+  .reserve-success h2 {
+    color: maroon;
+  }
+  
+  .reserve-success p {
+    color: maroon;
+  }
+  
+  .reserve-success a {
+    color: maroon;
+    text-decoration: none;
+    border: 1px solid maroon;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .reserve-success a:hover {
+    background-color: maroon;
+    color: white;
+  }
+  
